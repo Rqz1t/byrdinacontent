@@ -34,6 +34,10 @@
     @media(max-width:760px){.pricing{grid-template-columns:1fr;margin-top:36px;gap:12px}.price:nth-child(2){transform:none}.price{min-height:0}}
     .top-right{display:flex;align-items:center;gap:23px}.lang-switch{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.1em}.lang-switch a{padding:2px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}.lang-switch a:hover{color:var(--wine)}.lang-switch a[aria-current="page"]{color:var(--wine);border-color:var(--wine)}@media(max-width:760px){.top-right{margin-left:auto}.lang-switch{font-size:9px;gap:6px}}
   </style>
+  <style>
+    @media (hover:hover) and (pointer:fine){.gallery figure{will-change:transform}.gallery figure.is-tilting{transform:perspective(850px) rotateX(var(--tilt-y)) rotateY(var(--tilt-x)) translateY(-10px)!important}.gallery figure.is-tilting video{transform:scale(1.045);transition:transform .35s ease}.btn,.contact-link{will-change:transform}.btn.is-magnetic{transition:transform .12s ease}.gallery figcaption{transition:letter-spacing .3s ease}.gallery figure:hover figcaption{letter-spacing:.23em}}
+    @media (prefers-reduced-motion:reduce){.gallery figure,.gallery video,.btn,.contact-link{transition:none!important}}
+  </style>
 </head>
 <body>
   <header class="top wrap"><a class="logo" href="#top">byrdina<i>content</i></a><div class="top-right"><nav class="menu" aria-label="Główna nawigacja"><a href="#about">o mnie</a><a href="#work">wideo</a><a href="#services">usługi</a><a href="#prices">cennik</a><a href="#contact">kontakt</a></nav><nav class="lang-switch" aria-label="Język strony"><a href="../uk/index.html" data-language="uk">UA</a><a href="../pl/index.html" data-language="pl" aria-current="page">PL</a><a href="../en/index.html" data-language="en">EN</a></nav></div></header>
@@ -60,6 +64,7 @@
     const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('show');observer.unobserve(entry.target)}}),{threshold:.12});
     document.querySelectorAll('.reveal').forEach(item=>observer.observe(item));
     document.querySelectorAll('[data-language]').forEach(link=>{link.href+=location.search+location.hash;link.addEventListener('click',()=>localStorage.setItem('byrdina-language',link.dataset.language))});
+    if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&matchMedia('(hover: hover) and (pointer: fine)').matches){document.querySelectorAll('.gallery figure').forEach(card=>{card.addEventListener('pointermove',event=>{const box=card.getBoundingClientRect();card.style.setProperty('--tilt-x',`${((event.clientX-box.left)/box.width-.5)*9}deg`);card.style.setProperty('--tilt-y',`${((event.clientY-box.top)/box.height-.5)*-9}deg`);card.classList.add('is-tilting')});card.addEventListener('pointerleave',()=>card.classList.remove('is-tilting'))});document.querySelectorAll('.btn').forEach(button=>{button.addEventListener('pointermove',event=>{const box=button.getBoundingClientRect();button.style.transform=`translate(${(event.clientX-box.left-box.width/2)*.12}px,${(event.clientY-box.top-box.height/2)*.18}px)`;button.classList.add('is-magnetic')});button.addEventListener('pointerleave',()=>{button.style.transform='';button.classList.remove('is-magnetic')})})}
   </script>
 </body>
 </html>
