@@ -191,11 +191,11 @@
     .reveal.show .sub,.reveal.show .lead,.reveal.show .eyebrow{animation:velvet-reveal .8s cubic-bezier(.16,.9,.2,1) both;animation-delay:.26s}
     .reveal.show .portrait,.reveal.show .review-proof{animation:silver-develop 1.25s cubic-bezier(.16,.9,.2,1) both}
 
-    .gallery figure{opacity:0}
-    .reveal.show .gallery figure{animation:silver-develop .95s cubic-bezier(.16,.9,.2,1) forwards}
-    .reveal.show .gallery figure:nth-child(2){animation-delay:.12s}
-    .reveal.show .gallery figure:nth-child(3){animation-delay:.24s}
-    .reveal.show .gallery figure:nth-child(4){animation-delay:.36s}
+    .gallery.reveal:not(.show) figure{opacity:0}
+    .gallery.reveal.show figure{animation:silver-develop .95s cubic-bezier(.16,.9,.2,1) forwards}
+    .gallery.reveal.show figure:nth-child(2){animation-delay:.12s}
+    .gallery.reveal.show figure:nth-child(3){animation-delay:.24s}
+    .gallery.reveal.show figure:nth-child(4){animation-delay:.36s}
 
     @media (hover:hover) and (pointer:fine){
       .gallery figure{will-change:transform}
