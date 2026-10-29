@@ -109,16 +109,31 @@
     .gallery .video-04:before{content:'new';position:absolute;z-index:2;top:14px;right:14px;padding:4px 9px;background:#b8d7c9;color:#1d3740;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
     .gallery-note{display:block;text-align:center;margin-top:24px;font:600 27px var(--hand);color:var(--green)}
 
-    /* Services */
-    .services{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px}
-    .card{background:rgba(247,248,242,.8);border:1px solid var(--line);padding:33px 28px;border-radius:8px;box-shadow:var(--shadow);transition:transform .35s,box-shadow .35s}
-    .card:nth-child(2){background:#dce8e0}
-    .card:nth-child(3){background:#e9d8bd}
-    .card:hover{transform:translateY(-8px)!important;box-shadow:0 25px 45px rgba(73,42,32,.2)}
-    .num{font:italic 20px var(--serif);color:var(--green)}
-    .card h3{font:600 30px/1 var(--serif);color:var(--wine);margin:15px 0 12px}
-    .card p{color:var(--muted);margin:0;font-size:14px}
-    .mini{font:600 23px var(--hand);color:var(--green);margin-top:17px;display:block}
+    /* A short creator story, assembled from four puzzle pieces */
+    .story-puzzle{width:min(390px,88vw);margin:28px auto 16px;perspective:900px}
+    .story-puzzle svg{display:block;width:100%;height:auto;overflow:visible}
+    .story-piece{transform-box:fill-box;transform-origin:center;transition:transform 1.05s cubic-bezier(.2,.8,.2,1),filter .8s ease}
+    .piece-two{transition-delay:.12s}
+    .piece-three{transition-delay:.24s}
+    .piece-four{transition-delay:.36s}
+    .story-piece>use:first-child{fill:#1d3740;opacity:.72}
+    .story-piece .piece-image{filter:saturate(.88)}
+    .story-piece .piece-tint{fill:#1d3740;opacity:.22}
+    .story-piece .piece-edge{fill:none;stroke:rgba(255,255,255,.82);stroke-width:2}
+    .piece-number{fill:#dce8e0;font:italic 14px var(--serif);text-anchor:middle}
+    .piece-label{fill:#fff;font:600 15px var(--sans);letter-spacing:.03em;text-anchor:middle}
+    .story-copy{max-width:620px;margin:12px auto 0;text-align:center;color:var(--ink);font:500 clamp(20px,2.7vw,27px)/1.45 var(--serif)}
+    .story-copy p{margin:0 0 14px}
+    .story-copy strong{color:var(--wine);font-weight:600}
+    .story-note{display:block;margin-top:15px;color:var(--green);font:600 25px var(--hand)}
+    .has-story-animation .story-piece{filter:drop-shadow(0 10px 12px rgba(28,53,55,.2));}
+    .has-story-animation #services:not(.is-assembled) .piece-one{transform:translate(-28px,-24px) rotate(-7deg)}
+    .has-story-animation #services:not(.is-assembled) .piece-two{transform:translate(27px,-22px) rotate(6deg)}
+    .has-story-animation #services:not(.is-assembled) .piece-three{transform:translate(-25px,25px) rotate(6deg)}
+    .has-story-animation #services:not(.is-assembled) .piece-four{transform:translate(27px,23px) rotate(-7deg)}
+    #services.is-assembled .story-piece{transform:translate(0) rotate(0);filter:drop-shadow(0 3px 4px rgba(28,53,55,.18))}
+    .has-story-animation #services:not(.is-assembled) .story-copy{opacity:.55}
+    .story-copy{transition:opacity .7s ease .35s}
 
     /* Manifesto */
     .manifesto{padding:140px 0;text-align:center;overflow:hidden}
@@ -233,8 +248,12 @@
       .gallery figure{scroll-snap-align:center}
       .gallery figure{border-width:5px!important;outline-offset:3px}
       .gallery-note{font-size:23px}
-      .services{grid-template-columns:1fr;margin-top:36px;gap:12px}
-      .card{padding:25px}
+      .story-puzzle{width:min(340px,88vw);margin:18px auto 10px}
+      .piece-label{font-size:14px}
+      .has-story-animation #services:not(.is-assembled) .piece-one{transform:translate(-15px,-15px) rotate(-5deg)}
+      .has-story-animation #services:not(.is-assembled) .piece-two{transform:translate(15px,-15px) rotate(5deg)}
+      .has-story-animation #services:not(.is-assembled) .piece-three{transform:translate(-15px,15px) rotate(5deg)}
+      .has-story-animation #services:not(.is-assembled) .piece-four{transform:translate(15px,15px) rotate(-5deg)}
       .manifesto{padding:90px 0}
       .testimonials{padding:74px 0 82px}
       .review-card{grid-template-columns:1fr;margin-top:34px;padding:30px 24px 35px}
@@ -253,6 +272,7 @@
       .reveal.show .hero h1,.reveal.show .title,.reveal.show .story p,.reveal.show .manifesto blockquote,
       .reveal.show .sub,.reveal.show .lead,.reveal.show .eyebrow,.reveal.show .portrait,
       .reveal.show .review-proof,.gallery figure,.reveal.show .gallery figure{animation:none;opacity:1;filter:none;clip-path:none;transform:none}
+      .story-piece{transform:none!important;transition:none!important;filter:none!important}
       .hero:after{animation:none;opacity:.32;filter:none;transform:rotate(0)}
       .orbit{animation:none!important}
       .gallery figure,.gallery video,.btn,.contact-link{transition:none!important}
@@ -267,7 +287,7 @@
         <nav class="menu" aria-label="Головна навігація">
           <a href="#about">про мене</a>
           <a href="#work">відео</a>
-          <a href="#services">послуги</a>
+          <a href="#services">знайомство</a>
           <a href="#prices">прайс</a>
           <a href="#contact">контакти</a>
         </nav>
@@ -351,29 +371,56 @@
     <section class="section" id="services">
       <div class="wrap">
         <div class="reveal">
-          <p class="eyebrow" style="text-align:center">що створюю</p>
-          <h2 class="title">контент, який<br>хочеться дивитися</h2>
-          <p class="sub">UGC для твоєї аудиторії, цілей та платформ, де живе твій бренд.</p>
+          <p class="eyebrow" style="text-align:center">знайомство</p>
+          <h2 class="title">хто така Анастасія?</h2>
+          <p class="sub">Чотири фрагменти однієї історії — від першої ідеї до фінального монтажу.</p>
         </div>
-        <div class="services reveal">
-          <article class="card">
-            <span class="num">01</span>
-            <h3>UGC-відео</h3>
-            <p>Природні відео з продуктом: розпаковки, демонстрації, рутини та lifestyle-контент.</p>
-            <span class="mini">бути ближче до аудиторії</span>
-          </article>
-          <article class="card">
-            <span class="num">02</span>
-            <h3>Рекламні креативи</h3>
-            <p>Відео з сильним хуком для рекламних кампаній — з вигодами та природним закликом до дії.</p>
-            <span class="mini">зупинити скрол</span>
-          </article>
-          <article class="card">
-            <span class="num">03</span>
-            <h3>Контент-пакети</h3>
-            <p>Добірка різних UGC-відео для запуску, тестування нових ідей або наповнення бібліотеки контенту.</p>
-            <span class="mini">готове до публікації</span>
-          </article>
+        <figure class="story-puzzle reveal" aria-hidden="true">
+          <svg viewBox="-34 -34 428 428" role="presentation">
+            <defs>
+              <path id="story-piece-1" d="M12 4H180V66C207 52 226 67 226 90C226 113 207 128 180 114V180H114C128 204 112 226 90 226C68 226 52 204 66 180H4V16Q4 4 12 4Z"/>
+              <path id="story-piece-2" d="M180 4H348Q356 4 356 16V180H294C308 204 292 226 270 226C248 226 232 204 246 180H180V114C207 128 226 113 226 90C226 67 207 52 180 66Z"/>
+              <path id="story-piece-3" d="M4 180H66C52 204 68 226 90 226C112 226 128 204 114 180H180V244C207 230 226 245 226 269C226 292 207 307 180 293V344Q180 356 168 356H16Q4 356 4 344Z"/>
+              <path id="story-piece-4" d="M180 180H246C232 204 248 226 270 226C292 226 308 204 294 180H344Q356 180 356 192V344Q356 356 344 356H180V293C207 307 226 292 226 269C226 245 207 230 180 244Z"/>
+              <clipPath id="story-clip-1"><use href="#story-piece-1"/></clipPath>
+              <clipPath id="story-clip-2"><use href="#story-piece-2"/></clipPath>
+              <clipPath id="story-clip-3"><use href="#story-piece-3"/></clipPath>
+              <clipPath id="story-clip-4"><use href="#story-piece-4"/></clipPath>
+            </defs>
+            <g class="story-piece piece-one">
+              <use href="#story-piece-1" transform="translate(0 6)"/>
+              <image class="piece-image" href="../img/nastasia-01.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-1)"/>
+              <use class="piece-tint" href="#story-piece-1"/>
+              <use class="piece-edge" href="#story-piece-1"/>
+              <text class="piece-number" x="90" y="105">01</text><text class="piece-label" x="90" y="128">кріейторка</text>
+            </g>
+            <g class="story-piece piece-two">
+              <use href="#story-piece-2" transform="translate(0 6)"/>
+              <image class="piece-image" href="../img/nastasia-01.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-2)"/>
+              <use class="piece-tint" href="#story-piece-2"/>
+              <use class="piece-edge" href="#story-piece-2"/>
+              <text class="piece-number" x="270" y="105">02</text><text class="piece-label" x="270" y="128">сценарій</text>
+            </g>
+            <g class="story-piece piece-three">
+              <use href="#story-piece-3" transform="translate(0 6)"/>
+              <image class="piece-image" href="../img/nastasia-01.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-3)"/>
+              <use class="piece-tint" href="#story-piece-3"/>
+              <use class="piece-edge" href="#story-piece-3"/>
+              <text class="piece-number" x="90" y="270">03</text><text class="piece-label" x="90" y="293">зйомка</text>
+            </g>
+            <g class="story-piece piece-four">
+              <use href="#story-piece-4" transform="translate(0 6)"/>
+              <image class="piece-image" href="../img/nastasia-01.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-4)"/>
+              <use class="piece-tint" href="#story-piece-4"/>
+              <use class="piece-edge" href="#story-piece-4"/>
+              <text class="piece-number" x="270" y="270">04</text><text class="piece-label" x="270" y="293">монтаж</text>
+            </g>
+          </svg>
+        </figure>
+        <div class="story-copy reveal">
+          <p><strong>Я Анастасія — UGC-кріейторка.</strong></p>
+          <p>Створюю природні відео з продуктом: від ідеї та сценарію до зйомки й фінального монтажу. У центрі кожної роботи — історія, що пасує бренду й говорить із його аудиторією.</p>
+          <span class="story-note">кожна деталь складається в історію</span>
         </div>
       </div>
     </section>
@@ -487,6 +534,14 @@
       }),{threshold:.01,rootMargin:'0px 0px 100px 0px'});
       document.documentElement.classList.add('has-reveal-observer');
       document.querySelectorAll('.reveal').forEach(item=>observer.observe(item));
+      const storySection=document.querySelector('#services');
+      if(storySection&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+        document.documentElement.classList.add('has-story-animation');
+        const storyObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+          if(entry.isIntersecting){entry.target.classList.add('is-assembled');storyObserver.unobserve(entry.target)}
+        }),{threshold:.18,rootMargin:'0px 0px -6% 0px'});
+        storyObserver.observe(storySection);
+      }
     }
 
     // Multi-language preservation
