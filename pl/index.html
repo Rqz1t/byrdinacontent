@@ -65,8 +65,13 @@
     .hero{min-height:100svh;position:relative;display:grid;place-items:center;text-align:center;overflow:hidden;padding:120px 0 70px}
     .hero:after{content:"";position:absolute;width:min(560px,85vw);height:min(560px,85vw);border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(75,122,125,.12) 0deg 48deg,rgba(75,122,125,.3) 48deg 58deg,rgba(75,122,125,.12) 58deg 60deg);-webkit-mask:radial-gradient(circle,transparent 0 27%,#000 29% 47%,transparent 49%);mask:radial-gradient(circle,transparent 0 27%,#000 29% 47%,transparent 49%);transform:rotate(22deg);z-index:0;animation:aperture-open 1.8s cubic-bezier(.16,1,.3,1) .2s both}
     @keyframes aperture-open{0%{opacity:0;transform:rotate(-38deg) scale(.28);filter:blur(8px)}65%{opacity:.85;transform:rotate(12deg) scale(1.05);filter:blur(0)}100%{opacity:.55;transform:rotate(0) scale(1)}}
+    .orbit{position:absolute;z-index:0;display:grid;place-items:center;width:150px;aspect-ratio:1;border:1px solid rgba(255,255,255,.55);border-radius:48% 52% 45% 55%;background:linear-gradient(145deg,#9bc1b2,#5c897d);box-shadow:var(--shadow);color:#f7fbf6;font:600 23px/.95 var(--serif);letter-spacing:.03em;text-align:center;pointer-events:none}
+    .orbit:before{content:"";position:absolute;inset:9px;border:1px solid rgba(255,255,255,.42);border-radius:inherit}
+    .orbit.one{left:8%;top:8%;transform:rotate(-13deg);animation:float 8s ease-in-out infinite}
+    .orbit.two{right:8%;bottom:8%;width:112px;background:linear-gradient(145deg,#f8f8f0,#b8d0c5);color:var(--wine);transform:rotate(15deg);animation:float 9s ease-in-out -3s infinite}
+    @keyframes float{50%{translate:0 -10px;rotate:4deg}}
     .eyebrow{color:var(--green);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
-    .hero-inner{position:relative;z-index:1}
+    .hero-inner{position:relative;z-index:1;width:min(100%,650px);margin:auto}
     .hero h1{font:600 clamp(52px,9vw,112px)/.94 var(--serif);letter-spacing:-.055em;color:var(--wine);margin:20px auto 22px;max-width:9ch}
     .hero h1 em{font-weight:500;color:var(--green)}
     .lead{font:500 clamp(19px,2.3vw,24px)/1.4 var(--serif);max-width:32ch;margin:0 auto;color:var(--ink)}
@@ -212,8 +217,13 @@
       .menu{display:flex;flex:1;min-width:0;overflow-x:auto;gap:15px;white-space:nowrap;scrollbar-width:none;font-size:10px}
       .menu::-webkit-scrollbar{display:none}
       .lang-switch{font-size:9px;gap:6px}
-      .hero{min-height:max(580px,100svh);padding:110px 0 70px}
+      .hero{min-height:max(620px,100svh);padding:110px 0 70px}
+      .hero-inner{padding:72px 0 82px}
       .hero h1{font-size:clamp(54px,17vw,82px)}
+      .orbit{width:82px;font-size:15px}
+      .orbit:before{inset:6px}
+      .orbit.one{left:5%;top:11%}
+      .orbit.two{right:5%;bottom:7%;width:72px}
       .section{padding:73px 0}
       .section[id],.contact[id]{scroll-margin-top:100px}
       .intro{grid-template-columns:1fr;margin-top:35px;gap:34px}
@@ -244,6 +254,7 @@
       .reveal.show .sub,.reveal.show .lead,.reveal.show .eyebrow,.reveal.show .portrait,
       .reveal.show .review-proof,.gallery figure,.reveal.show .gallery figure{animation:none;opacity:1;filter:none;clip-path:none;transform:none}
       .hero:after{animation:none;opacity:.32;filter:none;transform:rotate(0)}
+      .orbit{animation:none!important}
       .gallery figure,.gallery video,.btn,.contact-link{transition:none!important}
     }
   </style>
@@ -271,6 +282,8 @@
 
   <main id="top">
     <section class="hero">
+      <span class="orbit one">ideas<br>with soul</span>
+      <span class="orbit two">hello<br>there</span>
       <div class="hero-inner wrap reveal">
         <span class="eyebrow">byrdinacontent · twórczyni ugc</span>
         <h1>UGC, które brzmi <em>prawdziwie.</em></h1>
