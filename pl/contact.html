@@ -37,11 +37,8 @@
     .link:hover{translate:0 -4px;background:#dce8e0}
     .link small{display:block;text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:var(--muted)}
     .link span{font:600 27px var(--serif);color:var(--blue)}
-    .email-card{cursor:default}
-    .email-card>span{display:block;overflow-wrap:anywhere;font-size:clamp(20px,5.5vw,27px)}
-    .email-actions{display:flex;justify-content:center;gap:9px;margin-top:12px}
-    .email-action{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 13px;border:1px solid var(--blue);border-radius:24px;background:transparent;color:var(--blue);font:700 11px var(--sans);cursor:pointer}
-    .email-action:hover{background:var(--blue);color:#fff}
+    .email-address{display:block;overflow-wrap:anywhere;font:600 clamp(20px,5.5vw,27px) var(--serif);color:var(--blue)}
+    .email-card:hover .email-address{text-decoration:underline;text-underline-offset:4px}
     .hint{margin-top:26px;color:var(--green);font:600 23px var(--hand)}
     .lang-switch{position:absolute;z-index:2;top:21px;right:24px;display:flex;gap:7px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.1em}
     .lang-switch a{padding:2px 0;border-bottom:1px solid transparent;text-decoration:none;color:inherit}
@@ -71,11 +68,7 @@
       </a>
       <div class="link email-card">
         <small>Email</small>
-        <span>nastyabyrdina04@gmail.com</span>
-        <div class="email-actions">
-          <a class="email-action" href="mailto:nastyabyrdina04@gmail.com">Napisz</a>
-          <button class="email-action email-copy" type="button" data-email="nastyabyrdina04@gmail.com">Kopiuj adres</button>
-        </div>
+        <a class="email-address" href="mailto:nastyabyrdina04@gmail.com">nastyabyrdina04@gmail.com</a>
       </div>
     </div>
     <div class="hint">możesz po prostu napisać „cześć”</div>
@@ -89,21 +82,6 @@
       link.addEventListener('click',()=>localStorage.setItem('byrdina-language',link.dataset.language));
     });
 
-    // Email quick-copy feedback
-    document.querySelectorAll('.email-copy').forEach(button => {
-      button.addEventListener('click', async () => {
-        const email = button.dataset.email;
-        if (!email) return;
-        const original = button.textContent;
-        try {
-          await navigator.clipboard.writeText(email);
-          button.textContent = 'Skopiowano!';
-        } catch {
-          button.textContent = 'Nie skopiowano';
-        }
-        setTimeout(() => { button.textContent = original; }, 2200);
-      });
-    });
   </script>
 </body>
 </html>
