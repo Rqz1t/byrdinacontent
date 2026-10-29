@@ -22,6 +22,7 @@
   <style>
     :root{--paper:#e7e7df;--cream:#f7f8f2;--green:#5d887b;--ink:#2f3937;--blue:#1d3740;--muted:#687675;--line:rgba(29,55,64,.14);--serif:'Cormorant Garamond',Georgia,serif;--sans:Manrope,Arial,sans-serif;--hand:Caveat,cursive}
     *{box-sizing:border-box}
+    a:focus-visible,button:focus-visible{outline:2px solid var(--green);outline-offset:4px}
     body{min-height:100svh;margin:0;display:grid;place-items:center;padding:24px;background:radial-gradient(55% 40% at 50% 5%,rgba(154,193,182,.42),transparent 72%),var(--paper);font-family:var(--sans);color:var(--ink)}
     .card{position:relative;overflow:hidden;width:min(580px,100%);padding:clamp(38px,7vw,72px);text-align:center;background:rgba(247,248,242,.86);border:1px solid var(--line);box-shadow:0 22px 55px rgba(28,53,55,.16);border-radius:12px}
     .card:after{content:'35 mm';position:absolute;right:-20px;bottom:-35px;color:rgba(93,136,123,.11);font:600 110px var(--serif);transform:rotate(-8deg);pointer-events:none}
@@ -36,6 +37,11 @@
     .link:hover{translate:0 -4px;background:#dce8e0}
     .link small{display:block;text-transform:uppercase;letter-spacing:.16em;font-size:10px;color:var(--muted)}
     .link span{font:600 27px var(--serif);color:var(--blue)}
+    .email-card{cursor:default}
+    .email-card>span{display:block;overflow-wrap:anywhere;font-size:clamp(20px,5.5vw,27px)}
+    .email-actions{display:flex;justify-content:center;gap:9px;margin-top:12px}
+    .email-action{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 13px;border:1px solid var(--blue);border-radius:24px;background:transparent;color:var(--blue);font:700 11px var(--sans);cursor:pointer}
+    .email-action:hover{background:var(--blue);color:#fff}
     .hint{margin-top:26px;color:var(--green);font:600 23px var(--hand)}
     .lang-switch{position:absolute;z-index:2;top:21px;right:24px;display:flex;gap:7px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.1em}
     .lang-switch a{padding:2px 0;border-bottom:1px solid transparent;text-decoration:none;color:inherit}
@@ -63,10 +69,14 @@
         <small>Instagram</small>
         <span>@byrdinacontent</span>
       </a>
-      <a class="link email-copy" href="mailto:nastyabyrdina04@gmail.com" data-email="nastyabyrdina04@gmail.com" title="Kliknij, aby skopiować">
-        <small>Email · kliknij, aby skopiować</small>
+      <div class="link email-card">
+        <small>Email</small>
         <span>nastyabyrdina04@gmail.com</span>
-      </a>
+        <div class="email-actions">
+          <a class="email-action" href="mailto:nastyabyrdina04@gmail.com">Napisz</a>
+          <button class="email-action email-copy" type="button" data-email="nastyabyrdina04@gmail.com">Kopiuj adres</button>
+        </div>
+      </div>
     </div>
     <div class="hint">możesz po prostu napisać „cześć”</div>
   </main>
@@ -80,19 +90,18 @@
     });
 
     // Email quick-copy feedback
-    document.querySelectorAll('.email-copy').forEach(link => {
-      link.addEventListener('click', (e) => {
-        const email = link.dataset.email;
-        if (email && navigator.clipboard) {
-          navigator.clipboard.writeText(email).then(() => {
-            const small = link.querySelector('small');
-            if (small) {
-              const original = small.textContent;
-              small.textContent = '✓ Skopiowano w schowku!';
-              setTimeout(() => { small.textContent = original; }, 2200);
-            }
-          }).catch(() => {});
+    document.querySelectorAll('.email-copy').forEach(button => {
+      button.addEventListener('click', async () => {
+        const email = button.dataset.email;
+        if (!email) return;
+        const original = button.textContent;
+        try {
+          await navigator.clipboard.writeText(email);
+          button.textContent = 'Skopiowano!';
+        } catch {
+          button.textContent = 'Nie skopiowano';
         }
+        setTimeout(() => { button.textContent = original; }, 2200);
       });
     });
   </script>
