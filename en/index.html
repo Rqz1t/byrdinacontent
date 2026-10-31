@@ -110,8 +110,16 @@
     .gallery-note{display:block;text-align:center;margin-top:24px;font:600 27px var(--hand);color:var(--green)}
 
     /* A short creator story, assembled from four puzzle pieces */
-    .story-puzzle{width:min(390px,88vw);margin:28px auto 16px;perspective:900px}
-    .story-puzzle svg{display:block;width:100%;height:auto;overflow:visible}
+    .story-puzzle{width:min(390px,88vw);margin:28px auto 16px;perspective:900px;cursor:pointer;position:relative}
+    .story-puzzle svg{display:block;width:100%;height:auto;overflow:visible;position:relative;z-index:2}
+    .puzzle-secret{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;opacity:0;transition:opacity .8s ease .3s;pointer-events:none;padding:20%}
+    .puzzle-secret p{font:500 clamp(18px,3.2vw,26px)/1.3 var(--serif);color:var(--wine);text-align:center;margin:0}
+    .puzzle-secret em{color:var(--green);font-style:italic}
+    #services.is-open .puzzle-secret{opacity:1}
+    .puzzle-hint{position:absolute;bottom:-32px;left:50%;transform:translateX(-50%);font:500 16px var(--hand);color:var(--green);opacity:0;transition:opacity .6s ease;pointer-events:none;white-space:nowrap;z-index:3}
+    #services.is-assembled:not(.is-open) .puzzle-hint{opacity:.75}
+    #services.is-assembled:not(.is-open) .story-puzzle:hover .puzzle-hint{opacity:1}
+    @media(max-width:760px){.puzzle-hint{bottom:-40px;font-size:14px}}
     .story-piece{transform-box:fill-box;transform-origin:center;transition:transform 1.05s cubic-bezier(.2,.8,.2,1),filter .8s ease}
     .piece-two{transition-delay:.12s}
     .piece-three{transition-delay:.24s}
@@ -134,6 +142,11 @@
     #services.is-assembled .story-piece{transform:translate(0) rotate(0);filter:drop-shadow(0 3px 4px rgba(28,53,55,.18))}
     .has-story-animation #services:not(.is-assembled) .story-copy{opacity:.55}
     .story-copy{transition:opacity .7s ease .35s}
+    #services.is-open .piece-one{transform:translate(-80px,-70px) rotate(-12deg)!important}
+    #services.is-open .piece-two{transform:translate(80px,-70px) rotate(12deg)!important}
+    #services.is-open .piece-three{transform:translate(-80px,70px) rotate(12deg)!important}
+    #services.is-open .piece-four{transform:translate(80px,70px) rotate(-12deg)!important}
+    #services.is-open .story-piece{filter:drop-shadow(0 15px 20px rgba(28,53,55,.3))!important}
 
     /* Manifesto */
     .manifesto{padding:140px 0;text-align:center;overflow:hidden}
@@ -376,6 +389,10 @@
           <p class="sub">Four pieces of one story — from the first idea to the final edit.</p>
         </div>
         <figure class="story-puzzle reveal" aria-hidden="true">
+          <div class="puzzle-secret">
+            <p>Sometimes you need to <em>take apart</em><br>to see the <em>real</em> picture.</p>
+          </div>
+          <span class="puzzle-hint">✨ click to reveal the secret</span>
           <svg viewBox="-34 -34 428 428" role="presentation">
             <defs>
               <path id="story-piece-1" d="M12 4H180V66C207 52 226 67 226 90C226 113 207 128 180 114V180H114C128 204 112 226 90 226C68 226 52 204 66 180H4V16Q4 4 12 4Z"/>
@@ -389,25 +406,25 @@
             </defs>
             <g class="story-piece piece-one">
               <use href="#story-piece-1" transform="translate(0 6)"/>
-              <image class="piece-image" href="../img/nastasia-01.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-1)"/>
+              <image class="piece-image" href="../img/nastasia-puzzle.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-1)"/>
               <use class="piece-tint" href="#story-piece-1"/><use class="piece-edge" href="#story-piece-1"/>
               <text class="piece-number" x="90" y="105">01</text><text class="piece-label" x="90" y="128">creator</text>
             </g>
             <g class="story-piece piece-two">
               <use href="#story-piece-2" transform="translate(0 6)"/>
-              <image class="piece-image" href="../img/nastasia-01.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-2)"/>
+              <image class="piece-image" href="../img/nastasia-puzzle.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-2)"/>
               <use class="piece-tint" href="#story-piece-2"/><use class="piece-edge" href="#story-piece-2"/>
               <text class="piece-number" x="270" y="105">02</text><text class="piece-label" x="270" y="128">concept</text>
             </g>
             <g class="story-piece piece-three">
               <use href="#story-piece-3" transform="translate(0 6)"/>
-              <image class="piece-image" href="../img/nastasia-01.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-3)"/>
+              <image class="piece-image" href="../img/nastasia-puzzle.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-3)"/>
               <use class="piece-tint" href="#story-piece-3"/><use class="piece-edge" href="#story-piece-3"/>
               <text class="piece-number" x="90" y="270">03</text><text class="piece-label" x="90" y="293">filming</text>
             </g>
             <g class="story-piece piece-four">
               <use href="#story-piece-4" transform="translate(0 6)"/>
-              <image class="piece-image" href="../img/nastasia-01.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-4)"/>
+              <image class="piece-image" href="../img/nastasia-puzzle.webp" x="0" y="0" width="360" height="360" preserveAspectRatio="xMidYMid slice" clip-path="url(#story-clip-4)"/>
               <use class="piece-tint" href="#story-piece-4"/><use class="piece-edge" href="#story-piece-4"/>
               <text class="piece-number" x="270" y="270">04</text><text class="piece-label" x="270" y="293">editing</text>
             </g>
@@ -538,6 +555,17 @@
         }),{threshold:.18,rootMargin:'0px 0px -6% 0px'});
         storyObserver.observe(storySection);
       }
+    }
+
+    // Interactive puzzle - click to toggle open/closed
+    const puzzleFigure = document.querySelector('.story-puzzle');
+    const storySection = document.querySelector('#services');
+    if (puzzleFigure && storySection) {
+      puzzleFigure.addEventListener('click', () => {
+        if (storySection.classList.contains('is-assembled')) {
+          storySection.classList.toggle('is-open');
+        }
+      });
     }
 
     // Multi-language preservation
