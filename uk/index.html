@@ -110,7 +110,7 @@
     .gallery-note{display:block;text-align:center;margin-top:24px;font:600 27px var(--hand);color:var(--green)}
 
     /* A short creator story, assembled from four puzzle pieces */
-    .story-puzzle{width:min(390px,88vw);margin:28px auto 16px;perspective:900px}
+    .story-puzzle{width:min(390px,88vw);margin:28px auto 16px;perspective:900px;cursor:pointer}
     .story-puzzle svg{display:block;width:100%;height:auto;overflow:visible}
     .story-piece{transform-box:fill-box;transform-origin:center;transition:transform 1.05s cubic-bezier(.2,.8,.2,1),filter .8s ease}
     .piece-two{transition-delay:.12s}
@@ -134,6 +134,12 @@
     #services.is-assembled .story-piece{transform:translate(0) rotate(0);filter:drop-shadow(0 3px 4px rgba(28,53,55,.18))}
     .has-story-animation #services:not(.is-assembled) .story-copy{opacity:.55}
     .story-copy{transition:opacity .7s ease .35s}
+    /* Open state - pieces spread apart on click */
+    #services.is-open .piece-one{transform:translate(-80px,-70px) rotate(-12deg)!important}
+    #services.is-open .piece-two{transform:translate(80px,-70px) rotate(12deg)!important}
+    #services.is-open .piece-three{transform:translate(-80px,70px) rotate(12deg)!important}
+    #services.is-open .piece-four{transform:translate(80px,70px) rotate(-12deg)!important}
+    #services.is-open .story-piece{filter:drop-shadow(0 15px 20px rgba(28,53,55,.3))!important}
 
     /* Manifesto */
     .manifesto{padding:140px 0;text-align:center;overflow:hidden}
@@ -542,6 +548,18 @@
         }),{threshold:.18,rootMargin:'0px 0px -6% 0px'});
         storyObserver.observe(storySection);
       }
+    }
+
+    // Interactive puzzle - click to toggle open/closed
+    const puzzleFigure = document.querySelector('.story-puzzle');
+    const storySection = document.querySelector('#services');
+    if (puzzleFigure && storySection) {
+      puzzleFigure.addEventListener('click', () => {
+        // Only allow interaction after pieces are assembled
+        if (storySection.classList.contains('is-assembled')) {
+          storySection.classList.toggle('is-open');
+        }
+      });
     }
 
     // Multi-language preservation
