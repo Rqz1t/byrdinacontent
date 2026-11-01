@@ -204,6 +204,23 @@
     .email-card:hover .email-address{text-decoration:underline;text-underline-offset:4px}
     .footer{margin-top:94px;padding:22px 0;text-align:center;color:var(--muted);font-size:10px;letter-spacing:.15em;text-transform:uppercase;border-top:1px solid var(--line)}
 
+    /* Floating CTA */
+    .floating-cta{position:fixed;bottom:24px;right:24px;z-index:90;opacity:0;transform:translateY(20px) scale(.92);transition:opacity .4s ease,transform .4s cubic-bezier(.2,.7,.2,1);pointer-events:none}
+    .floating-cta.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+    .floating-cta .btn{box-shadow:0 8px 16px rgba(29,55,64,.32),0 20px 40px rgba(29,55,64,.24)}
+    @media(max-width:760px){.floating-cta{bottom:16px;right:16px}.floating-cta .btn{padding:13px 20px;font-size:11px}}
+
+    /* FAQ Section */
+    .faq{padding:90px 0}
+    .faq-list{max-width:720px;margin:40px auto 0}
+    .faq-item{border-bottom:1px solid var(--line)}
+    .faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:22px 50px 22px 0;position:relative;font:500 clamp(18px,2.4vw,22px)/1.3 var(--serif);color:var(--wine);transition:color .3s}
+    .faq-q:hover{color:var(--green)}
+    .faq-q:after{content:'+';position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:32px;font-weight:300;transition:transform .3s,color .3s}
+    .faq-item.open .faq-q:after{transform:translateY(-50%) rotate(45deg);color:var(--green)}
+    .faq-a{overflow:hidden;max-height:0;transition:max-height .4s cubic-bezier(.2,.7,.2,1)}
+    .faq-a-inner{padding:0 0 24px;color:var(--muted);line-height:1.7}
+
     /* Animation effects */
     .reveal{opacity:1;transform:none}
     .has-reveal-observer .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
@@ -503,6 +520,35 @@
       </div>
     </section>
 
+    <section class="faq section" id="faq">
+      <div class="wrap reveal">
+        <p class="eyebrow" style="text-align:center">pytania</p>
+        <h2 class="title">często zadawane pytania</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-q">Ile czasu zajmuje tworzenie wideo?</button>
+            <div class="faq-a"><div class="faq-a-inner">Zazwyczaj 5-7 dni roboczych od briefu do gotowego pliku. Pilne zamówienia są omawiane osobno.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Jakie prawa do użytkowania wideo?</button>
+            <div class="faq-a"><div class="faq-a-inner">Ustalamy indywidualnie: możliwe jest nieograniczone użycie lub konkretny okres i platformy.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Czy można wprowadzić zmiany po montażu?</button>
+            <div class="faq-a"><div class="faq-a-inner">Tak, jedna runda poprawek jest wliczona. Dodatkowe rundy — do uzgodnienia.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Jakich produktów nie nagrywasz?</button>
+            <div class="faq-a"><div class="faq-a-inner">Nie pracuję z alkoholem, tytoniem, grami hazardowymi i produktami sprzecznymi z moimi wartościami.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Jak przebiega proces współpracy?</button>
+            <div class="faq-a"><div class="faq-a-inner">Brief → koncept i scenariusz → Twoje zatwierdzenie → nagranie → montaż → finalny plik.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="contact" id="contact">
       <div class="wrap reveal">
         <span class="eyebrow">bądźmy w kontakcie</span>
@@ -526,6 +572,10 @@
       </div>
     </section>
   </main>
+
+  <div class="floating-cta" id="floatingCta">
+    <a class="btn" href="#contact">Napisz →</a>
+  </div>
 
   <script>
     document.querySelector('#year').textContent=new Date().getFullYear();
@@ -567,6 +617,41 @@
         }
       });
     }
+
+    // Floating CTA - show after scrolling past hero
+    const floatingCta = document.getElementById('floatingCta');
+    if (floatingCta) {
+      let lastScroll = 0;
+      window.addEventListener('scroll', () => {
+        const heroHeight = document.querySelector('.hero')?.offsetHeight || 800;
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > heroHeight && currentScroll > lastScroll) {
+          floatingCta.classList.add('show');
+        } else if (currentScroll < heroHeight - 100) {
+          floatingCta.classList.remove('show');
+        }
+        lastScroll = currentScroll;
+      }, { passive: true });
+    }
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const answer = item.querySelector('.faq-a');
+        const isOpen = item.classList.contains('open');
+
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-a').style.maxHeight = '0';
+        });
+
+        if (!isOpen) {
+          item.classList.add('open');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
 
     // Multi-language preservation
     document.querySelectorAll('[data-language]').forEach(link=>{
