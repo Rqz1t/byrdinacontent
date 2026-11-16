@@ -13,7 +13,8 @@ document.querySelectorAll('[data-language]').forEach(link => {
 document.querySelectorAll('video').forEach(video => video.addEventListener('play', () => { document.querySelectorAll('video').forEach(other => { if(other !== video) other.pause(); }); }));
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
   document.querySelectorAll('[data-filter]').forEach(other => other.setAttribute('aria-pressed',String(other === button)));
-  document.querySelectorAll('[data-category]').forEach(card => { card.hidden = button.dataset.filter !== 'all' && card.dataset.category !== button.dataset.filter; if(card.hidden) card.querySelector('video')?.pause(); });
+  document.querySelector('#work').dataset.activeCategory = button.dataset.filter;
+  document.querySelectorAll('[data-category]').forEach(card => { card.hidden = card.dataset.category !== button.dataset.filter; if(card.hidden) card.querySelector('video')?.pause(); });
 }));
 const dialog = document.querySelector('#photo-dialog');
 if(dialog) {
